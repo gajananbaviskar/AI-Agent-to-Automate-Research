@@ -85,7 +85,7 @@ This project evolved through several iterations to solve specific engineering bo
 ### Installation
 1.  Clone the repo:
     ```bash
-    git clone [https://github.com/your-username/local-rag-agent.git](https://github.com/your-username/local-rag-agent.git)
+    git clone https://github.com/gajananbaviskar/AI-Agent-to-Automate-Research.git
     cd local-rag-agent
     ```
 2.  Install dependencies:
