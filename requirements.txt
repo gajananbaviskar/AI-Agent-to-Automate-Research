@@ -1,0 +1,8 @@
+aiohttp
+beautifulsoup4
+duckduckgo-search
+faiss-cpu
+numpy
+ollama
+requests
+sentence-transformers
