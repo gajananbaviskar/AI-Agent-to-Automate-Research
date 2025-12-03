@@ -73,6 +73,20 @@ This project evolved through several iterations to solve specific engineering bo
 
 ---
 
+## 💡 Design Decisions (Why this Stack?)
+
+Every component in this architecture was chosen to balance speed, privacy, and computational efficiency on edge hardware (standard laptops).
+
+| Component | Choice | Reasoning |
+| :--- | :--- | :--- |
+| **Generative Model** | **Llama 3 (via Ollama)** | Chosen for its state-of-the-art performance in the 8B parameter class. It runs efficiently on local hardware/CPU via Ollama quantization, ensuring **100% data privacy** (critical for enterprise use cases) and zero inference cost. |
+| **Embedding Model** | **all-MiniLM-L6-v2** | A "tiny giant" in the Sentence Transformers library. It maps text to a 384-dimensional vector space. We chose this over larger models (like BERT) because it offers the **best speed-to-accuracy ratio**, allowing for near-instant embedding on a CPU. |
+| **Vector Database** | **FAISS (IndexFlatIP)** | We replaced ChromaDB with FAISS to solve "database locking" issues. FAISS runs entirely in RAM using C++ optimization. We use `IndexFlatIP` (Inner Product) with normalized vectors, which is mathematically equivalent to **Cosine Similarity** but significantly faster to compute. |
+| **Concurrency** | **AsyncIO + aiohttp** | Sequential scraping (Looping `requests.get`) creates massive latency bottlenecks. By moving to an Event Loop model, we fire all network requests simultaneously, reducing the total wait time from $T \times N$ to $max(T)$. |
+| **Search Provider** | **DuckDuckGo (DDGS)** | chosen to avoid the complexity and rate limits of paid APIs (like Bing/Google Custom Search). It allows for rapid prototyping and open-source distribution without requiring users to generate API keys. |
+
+---
+
 ## 🚀 How to Run
 
 ### Prerequisites
